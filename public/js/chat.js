@@ -1,19 +1,31 @@
-const socket = io()
+const socket = io();
 
-socket.on('message', (message) => {
-  console.log(message)
+socket.on("message", (message) => {
+  console.log(message);
+});
+
+const inputField = document.getElementById("#sender-text");
+const submitBtn = document.getElementById("#submitBtn");
+const form = document.getElementById("#message-form");
+const sendLocationBtn = document.querySelector("#send-location");
+
+document.querySelector("#message-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const message = e.target.elements.message.value;
+
+  socket.emit("sendMessage", message);
+});
+
+
+sendLocationBtn.addEventListener('click', () => {
+  if(!navigator.geolocation){
+    return alert("Geolocation is not supported by your browser.")
+  }
+
+  navigator.geolocation.getCurrentPosition((position) => {
+   socket.emit("sendLocation", {
+     latitude: position.coords.latitude,
+     longitude: position.coords.longitude
+   })
+  })
 })
-
-const inputField = document.getElementById('#sender-text')
-const submitBtn = document.getElementById('#submitBtn')
-const form = document.getElementById('#message-form')
-
-document.querySelector('#message-form').addEventListener('submit', (e) => {
-  e.preventDefault()
-  const message = e.target.elements.message.value
-
-  socket.emit('sendMessage', message)
-  
-})
-
-
