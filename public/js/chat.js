@@ -7,15 +7,26 @@ socket.on("message", (message) => {
   console.log(message);
 });
 
-const inputField = document.getElementById("#sender-text");
-const submitBtn = document.getElementById("#submitBtn");
-const form = document.querySelector("#message-form");
-const sendLocationBtn = document.querySelector("#send-location");
+const $inputField = document.querySelector("#sender-text");
+const $submitBtn = document.querySelector("#submitBtn");
+const $messageForm = document.querySelector("#message-form");
+const $sendLocationBtn = document.querySelector("#send-location");
 
-document.querySelector("#message-form").addEventListener("submit", (e) => {
+$messageForm.addEventListener('submit', (e) => {
   e.preventDefault();
+
+  $submitBtn.setAttribute('disabled', 'disabled')
+ 
+
+
+
   const message = e.target.elements.message.value;
   socket.emit("sendMessage", message, (error) => {
+
+    $submitBtn.removeAttribute('disabled')
+    $inputField.value = ''
+    $inputField.focus()
+    //above code enables button by removing attribute from above so it's enabled, input field is cleared and focus is maintained for fast message
     
     if(error) {
       return console.log(error)
@@ -31,17 +42,21 @@ document.querySelector("#message-form").addEventListener("submit", (e) => {
 
 
 
-sendLocationBtn.addEventListener('click', () => {
+$sendLocationBtn.addEventListener('click', () => {
+ 
   if(!navigator.geolocation){
     return alert("Geolocation is not supported by your browser.")
   }
+  $sendLocationBtn.setAttribute('disabled', 'disabled')
 
   navigator.geolocation.getCurrentPosition((position) => {
    socket.emit("sendLocation", {
      latitude: position.coords.latitude,
      longitude: position.coords.longitude
    }, () => {
+    $sendLocationBtn.removeAttribute('disabled')
     console.log('Location shared!')
+
    })
   })
 })
