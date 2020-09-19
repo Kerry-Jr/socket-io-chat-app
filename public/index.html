@@ -3,38 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css//styles.css" />
     <title>Socket.io Chat app</title>
+    <link rel="icon" href="./img/favicon.png" />
   </head>
   <body>
-    <h1>Chat App: by Kerry Smith</h1>
-
-    <div id="messages"></div>
-
-    <form id="message-form">
-      <input id="sender-text" placeholder="message" name="message" />
-      <button id="submitBtn" type="submit">SEND MESSAGE</button>
-      <button id="send-location">SEND LOCATION</button>
-    </form>
-
-    <script id="message-template" type="text/html">
-      <div>
-        <p>{{createdAt}} : {{message}}</p>
+    <div class="centered-form">
+      <div class="centered-form__box">
+          <h1>Join</h1>
+          <form action="./chat.html">
+            <label>Display name</label>
+            <input type="text" name="username" placeholder="Display name" required>
+            <label>Room</label>
+            <input type="text" name="room" placeholder="Room" required>
+            <button>Join</button>
+          </form>
       </div>
-    </script>
-    <script id="location-template" type="text/html">
-      <div>
-        <p>{{createdAt}} - <a href="{{url}}" target="_blank">My Location w/google maps</a></p>
-      </div>
-    </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.js"
-      integrity="sha512-U/YCJsTaU2MUJyzYWfCPnmPAhbqDfBA2LHdCts96j4Ld12VSu4x3chjikSkHuuEvRoDfqTD/ouPKS8j6lvGAvA=="
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/chat.js"></script>
+    </div>
   </body>
 </html>
