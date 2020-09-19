@@ -1,5 +1,4 @@
 const socket = io();
-
 const $inputField = document.querySelector("#sender-text");
 const $submitBtn = document.querySelector("#submitBtn");
 const $messageForm = document.querySelector("#message-form");
@@ -9,18 +8,7 @@ const $messages = document.querySelector("#messages");
 // Templates
 
 const messageTemplate = document.querySelector("#message-template").innerHTML;
-const locationTemplate = document.querySelector('#location-template').innerHTML;
-
-
-
-
-
-
-
-
-
-
-
+const locationTemplate = document.querySelector("#location-template").innerHTML;
 
 // server (emit's the event) --> client (receive) --acknowledgement --> server
 // client (emit's the event) --> server (receive) --acknowledgement --> client
@@ -28,18 +16,21 @@ const locationTemplate = document.querySelector('#location-template').innerHTML;
 socket.on("message", (message) => {
   console.log(message);
   const html = Mustache.render(messageTemplate, {
-    message
-  })
-  $messages.insertAdjacentHTML('beforeend', html)
+    message: message.text,
+    createdAt: moment(message.createdAt).format('LTS')
+    // createdAt: message.createdAt,
+  });
+  $messages.insertAdjacentHTML("beforeend", html);
 });
 
-socket.on('locationMessage', (url) => {
+socket.on("locationMessage", (message) => {
+  console.log(message);
   const html = Mustache.render(locationTemplate, {
-    url
-  })
-  $messages.insertAdjacentHTML('beforeend', html)
-})
-
+    url: message.url,
+    createdAt: moment(message.createdAt).format('LTS')
+  });
+  $messages.insertAdjacentHTML("beforeend", html);
+});
 
 $messageForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -51,7 +42,7 @@ $messageForm.addEventListener("submit", (e) => {
     $submitBtn.removeAttribute("disabled");
     $inputField.value = "";
     $inputField.focus();
-    //above code enables button by removing attribute from above so it's enabled, input field is cleared and focus is maintained for fast message
+    //above code enables button by removing attribute so it's enabled, input field is cleared and focus is maintained for fast message
 
     if (error) {
       return console.log(error);
