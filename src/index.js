@@ -20,8 +20,21 @@ app.use(express.static(publicDirectoryPath));
 io.on("connection", (socket) => {
   console.log("New Websocket Connection...");
 
-  socket.emit("message", generateMessage('Welcome!')); // to a single paticular connection
-  socket.broadcast.emit("message", generateMessage("A new user has joined the chat!")); // socket.broadcast emits to everyone but this connection
+
+  socket.on('join', ({ username, room }) => {
+    socket.join(room)
+
+
+    socket.emit("message", generateMessage('Welcome!')); // to a single paticular connection
+    socket.broadcast.to(room).emit("message", generateMessage(`${username} has joined!`)); // socket.broadcast emits to everyone but this connection
+
+    // socket.emit, io.emit, socket.broadcast
+    // io.to.emit, socket.broadcast.to.emit
+  })
+
+
+
+
 
   socket.on("sendMessage", (message, callback) => {
     const filter = new Filter();
@@ -29,7 +42,7 @@ io.on("connection", (socket) => {
     if (filter.isProfane(message)) {
       return callback("Profanity is not allowed!");
     }
-    io.emit("message", generateMessage(message)); // io.emit sends to everyone
+    io.to('Center City').emit("message", generateMessage(message)); // io.emit sends to everyone
     // console.log(message)
     callback();
   });
