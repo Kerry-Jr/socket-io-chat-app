@@ -37,10 +37,13 @@ io.on("connection", (socket) => {
 
     socket.join(user.room);
 
-    socket.emit("message", generateMessage("Welcome!")); // to a single paticular connection
+    socket.emit("message", generateMessage("Admin", "Welcome!")); // to a single paticular connection
     socket.broadcast
       .to(user.room)
-      .emit("message", generateMessage(`${user.username} has joined!`)); // socket.broadcast emits to everyone but this connection
+      .emit(
+        "message",
+        generateMessage("Admin", `${user.username} has joined!`)
+      ); // socket.broadcast emits to everyone but this connection
 
     callback();
     // the callback is being called without any args -meaning without error. It's main purpose is to let the client know they were able to join successfully
@@ -62,7 +65,8 @@ io.on("connection", (socket) => {
     const user = getUser(socket.id);
     io.to(user.room).emit(
       "locationMessage",
-      generateLocationMessage(user.username, 
+      generateLocationMessage(
+        user.username,
         `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
       )
     );
@@ -75,7 +79,7 @@ io.on("connection", (socket) => {
     if (user) {
       io.to(user.room).emit(
         "message",
-        generateMessage(`${user.username} has left!`)
+        generateMessage("Admin", `${user.username} has left!`)
       );
     }
   });
