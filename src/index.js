@@ -3,6 +3,8 @@ const http = require("http");
 const path = require("path");
 const socketio = require("socket.io");
 const Filter = require("bad-words");
+const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
+
 
 
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
@@ -21,15 +23,25 @@ io.on("connection", (socket) => {
   console.log("New Websocket Connection...");
 
 
-  socket.on('join', ({ username, room }) => {
-    socket.join(room)
+  socket.on('join', (options, callback) => {
+   const { error, user } = addUser({ id: socket.id, ...options })
+    
+   if(error){
+     return callback(error)
+   }
+    
+    
+    
+    
+    
+    socket.join(user.room)
 
 
     socket.emit("message", generateMessage('Welcome!')); // to a single paticular connection
-    socket.broadcast.to(room).emit("message", generateMessage(`${username} has joined!`)); // socket.broadcast emits to everyone but this connection
+    socket.broadcast.to(user.room).emit("message", generateMessage(`${user.username} has joined!`)); // socket.broadcast emits to everyone but this connection
 
-    // socket.emit, io.emit, socket.broadcast
-    // io.to.emit, socket.broadcast.to.emit
+    callback()
+    // the callback is being called without any args -meaning without error. It's main purpose is to let the client know they were able to join successfully
   })
 
 
@@ -57,7 +69,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    io.emit("message", generateMessage("A user has left!"));
+   const user = removeUser(socket.id)
+
+    if(user) {
+      io.to(user.room).emit("message", generateMessage(`${user.username} has left!`));
+    }
   });
 });
 

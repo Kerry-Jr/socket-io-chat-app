@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e157cbc0-f7aa-4c0d-8fa9-0a230f6a1b7c" name="Default Changelist" comment="" />
+    <list default="true" id="e157cbc0-f7aa-4c0d-8fa9-0a230f6a1b7c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/chat.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,6 +37,8 @@
       <option name="presentableId" value="Default" />
       <updated>1600369819020</updated>
       <workItem from="1600369820566" duration="947000" />
+      <workItem from="1600546790160" duration="23000" />
+      <workItem from="1600546830055" duration="623000" />
     </task>
     <servers />
   </component>
@@ -44,6 +49,10 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="1396" y="422" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1600546806067">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state x="1396" y="422" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.3440.1400/3440.0.2560.1400@0.0.3440.1400" timestamp="1600546806067" />
     <state x="1140" y="258" key="SettingsEditor" timestamp="1600370173183">
       <screen x="0" y="0" width="3440" height="1400" />
     </state>

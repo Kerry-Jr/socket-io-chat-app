@@ -15,8 +15,8 @@ const {username, room} = Qs.parse(location.search, {
   ignoreQueryPrefix: true
 })
 
-// server (emit's the event) --> client (receive) --acknowledgement --> server
-// client (emit's the event) --> server (receive) --acknowledgement --> client
+// server (emits the event) --> client (receive) --acknowledgement --> server
+// client (emits the event) --> server (receive) --acknowledgement --> client
 
 socket.on("message", (message) => {
   console.log(message);
@@ -79,5 +79,10 @@ $sendLocationBtn.addEventListener("click", () => {
   });
 });
 
-socket.emit('join', { username, room })
+socket.emit('join', { username, room }, (error) => {
+  if(error) {
+    alert(error)
+    location.href = '/'
+  }
+})
 
