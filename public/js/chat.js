@@ -11,9 +11,9 @@ const messageTemplate = document.querySelector("#message-template").innerHTML;
 const locationTemplate = document.querySelector("#location-template").innerHTML;
 
 //options ------
-const {username, room} = Qs.parse(location.search, {
-  ignoreQueryPrefix: true
-})
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
 
 // server (emits the event) --> client (receive) --acknowledgement --> server
 // client (emits the event) --> server (receive) --acknowledgement --> client
@@ -21,8 +21,9 @@ const {username, room} = Qs.parse(location.search, {
 socket.on("message", (message) => {
   console.log(message);
   const html = Mustache.render(messageTemplate, {
+    username: message.username,
     message: message.text,
-    createdAt: moment(message.createdAt).format('LTS')
+    createdAt: moment(message.createdAt).format("LTS"),
     // createdAt: message.createdAt,
   });
   $messages.insertAdjacentHTML("beforeend", html);
@@ -31,8 +32,9 @@ socket.on("message", (message) => {
 socket.on("locationMessage", (message) => {
   console.log(message);
   const html = Mustache.render(locationTemplate, {
+    username: message.username,
     url: message.url,
-    createdAt: moment(message.createdAt).format('LTS')
+    createdAt: moment(message.createdAt).format("LTS"),
   });
   $messages.insertAdjacentHTML("beforeend", html);
 });
@@ -79,10 +81,9 @@ $sendLocationBtn.addEventListener("click", () => {
   });
 });
 
-socket.emit('join', { username, room }, (error) => {
-  if(error) {
-    alert(error)
-    location.href = '/'
+socket.emit("join", { username, room }, (error) => {
+  if (error) {
+    alert(error);
+    location.href = "/";
   }
-})
-
+});

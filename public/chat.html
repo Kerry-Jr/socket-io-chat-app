@@ -25,19 +25,17 @@
     <script id="message-template" type="text/html">
       <div class="message">
         <p>
-          <span class="message__name">Username</span>
+          <span class="message__name">{{username}}</span>
           <span class="message__meta">{{createdAt}}</span>
-        
         </p>
         <p>{{message}}</p>
       </div>
     </script>
 
-
     <script id="location-template" type="text/html">
       <div class="message">
         <p>
-          <span class="message__name">Username</span>
+          <span class="message__name">{{username}}</span>
           <span class="message__meta">{{createdAt}}</span>
         </p>
         <p><a href="{{url}}" target="_blank">My Location w/google maps</a></p>

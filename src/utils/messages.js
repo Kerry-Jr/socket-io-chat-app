@@ -1,6 +1,7 @@
 //this func is for generating time stamp in chat room
-const generateMessage = (text) => {
+const generateMessage = (username, text) => {
   return {
+    username,
     text,
     createdAt: new Date().getTime()
   };
@@ -8,8 +9,9 @@ const generateMessage = (text) => {
 
 
 // this function is for generating timestamp for location
-const generateLocationMessage = (url) => {
+const generateLocationMessage = (username, url) => {
   return {
+    username,
     url,
     createdAt: new Date().getTime()
   }
