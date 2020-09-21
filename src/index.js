@@ -44,10 +44,10 @@ io.on("connection", (socket) => {
         "message",
         generateMessage("Admin", `${user.username} has joined!`)
       ); // socket.broadcast emits to everyone but this connection
-        io.to(user.room).emit('roomData', {
-          room: user.room,
-          users: getUsersInRoom(user.room)
-        })
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      users: getUsersInRoom(user.room),
+    });
     callback();
     // the callback is being called without any args -meaning without error. It's main purpose is to let the client know they were able to join successfully
   });
@@ -84,10 +84,10 @@ io.on("connection", (socket) => {
         "message",
         generateMessage("Admin", `${user.username} has left!`)
       );
-      io.to(user.room).emit('roomData', {
+      io.to(user.room).emit("roomData", {
         room: user.room,
-        users: getUsersInRoom(user.room)
-      })
+        users: getUsersInRoom(user.room),
+      });
     }
   });
 });
