@@ -4,11 +4,13 @@ const $submitBtn = document.querySelector("#submitBtn");
 const $messageForm = document.querySelector("#message-form");
 const $sendLocationBtn = document.querySelector("#send-location");
 const $messages = document.querySelector("#messages");
+const $sidebar = document.querySelector("#sidebar");
 
 // Templates
 
 const messageTemplate = document.querySelector("#message-template").innerHTML;
 const locationTemplate = document.querySelector("#location-template").innerHTML;
+const sidebarTemplate = document.querySelector("#sidebar-template").innerHTML;
 
 //options ------
 const { username, room } = Qs.parse(location.search, {
@@ -38,6 +40,22 @@ socket.on("locationMessage", (message) => {
   });
   $messages.insertAdjacentHTML("beforeend", html);
 });
+
+//this event is for room-data to display in the sidebar ( all the users in the room as they come and go and then the room name at the top of the side bar)
+
+socket.on('roomData', ({room, users}) => {
+ const html = Mustache.render(sidebarTemplate, {
+   room,
+   users
+ })
+ 
+ $sidebar.innerHTML = html
+  // console.log(room)
+  // console.log(users)
+})
+
+
+
 
 $messageForm.addEventListener("submit", (e) => {
   e.preventDefault();
